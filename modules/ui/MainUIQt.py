@@ -1,6 +1,14 @@
-import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QAction, QStackedWidget, QWidget, QVBoxLayout, QLabel
-from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import QApplication, QMainWindow, QAction, QStackedWidget, QWidget, QVBoxLayout, QLabel, QMenuBar, QMenu
+from functools import partial
+from modules.ui.SplashScreen import SplashScreenWidget
+from modules.ui.NewDataset import NewDatasetWidget
+from enum import Enum
+
+# The indexes are determined by the order we added stuff to the stacked view, we need to be careful with this
+class ViewsEnum(Enum):
+    SPLASH_SCREEN = 0
+    NEW_DATASET = 1
+    IMPORT_DIRECTORY = 2
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -9,37 +17,28 @@ class MainWindow(QMainWindow):
         self.viewContainer = QStackedWidget()
         self.setCentralWidget(self.viewContainer)
 
-        self.viewContainer.addWidget(self.buildSplashScreen())
+        self.setupMenu()
 
-        # Add widgets (consider these as individual "windows") to the stacked layout
-        #self.initUI()
+        self.viewContainer.addWidget(SplashScreenWidget())
+        self.viewContainer.addWidget(NewDatasetWidget())
 
-    def buildSplashScreen(self):
-        splashScreen = QWidget()
+    def setupMenu(self):
+        # Setup the menu
+        menubar = self.menuBar()
 
-        # Build the layout
-        layout = QVBoxLayout()
-        layout.addWidget(QLabel("Splash Screen"))
+        fileMenu = menubar.addMenu('File')
 
-        # code for adding a toolbar
-        menuBar = self.menuBar()
-        fileMenu = QtWidgets.QMenu("&File", self)
+        newAction = QAction('New', self)
+        newAction.triggered.connect(partial(self.displayView, ViewsEnum.NEW_DATASET.value))
+        fileMenu.addAction(newAction)
 
-        # Adding the "New Dataset" action to the "File" menu
-        self.newDatasetAction = QAction(self)
-        self.newDatasetAction.setText("&New Dataset")
-        fileMenu.addAction(self.newDatasetAction)
-
-
-        splashScreen.setLayout(layout)
-
-        return splashScreen
+        importDirectoryAction = QAction('Import Directory', self)
+        importDirectoryAction.triggered.connect(partial(self.displayView, ViewsEnum.IMPORT_DIRECTORY.value))
+        fileMenu.addAction(importDirectoryAction)
 
     def displayView(self, withIndex: int):
+        print(f"Displaying view: {withIndex}")
         self.viewContainer.setCurrentIndex(withIndex)
-
-    def newDataset(self):
-        print("lolaxo")
 
     def initUI(self):
         # Create two widgets that can be switched between
@@ -56,18 +55,3 @@ class MainWindow(QMainWindow):
         # Add widgets to the stacked layout
         self.viewContainer.addWidget(self.first_widget)
         self.viewContainer.addWidget(self.second_widget)
-
-        # Setup the menu
-        menubar = self.menuBar()
-        fileMenu = menubar.addMenu('File')
-
-        # Add actions to the menu
-        newAct = QAction('New', self)
-        newAct.triggered.connect(self.display_second_window)
-        fileMenu.addAction(newAct)
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = MainWindow()
-    ex.show()
-    sys.exit(app.exec_())

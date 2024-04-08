@@ -1,14 +1,13 @@
 import os
 import sys
-
 sys.path.append(os.getcwd())
 
-from modules.ui.MainUI import App
-
-def main():
-    ui = App()
-    ui.mainloop()
-    ui.close()
+from PyQt5.QtWidgets import QApplication
+#from modules.ui.MainUIQt import MainWindow
 
 if __name__ == "__main__":
-    main()
+    print("lol")
+    #app = QApplication(sys.argv)
+    #ex = MainWindow()
+    #ex.show()
+    #sys.exit(app.exec_())
