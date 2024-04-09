@@ -1,6 +1,8 @@
 from tinydb import TinyDB, Query
 from tinydb.table import Table
 from modules.models import Dataset
+from os.path import isfile, join
+from os import listdir
 import os
 
 class DatasetController(object):
@@ -14,5 +16,17 @@ class DatasetController(object):
     def getAllDatasets(self):
         return self.datasetsTable.all()
 
-    def insertDataset(self, newDataset: Dataset):
-        self.datasetsTable.insert(newDataset.dict())
+    def newDataset(self, newDataset: Dataset):
+        pass
+
+class NewDatasetBuilder(object):
+    def __init__(self, dataset: Dataset):
+        if not os.path.isdir(dataset.directoryAbsPath):
+            raise Exception("The dataset path specified is not a directory")
+        self.dataset = dataset
+
+    def getAllFiles(self):
+        files = [f for f in listdir(self.dataset.directoryAbsPath) if isfile(join(self.dataset.directoryAbsPath, f))]
+
+
+

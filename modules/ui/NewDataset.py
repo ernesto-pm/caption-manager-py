@@ -69,7 +69,7 @@ class NewDatasetWidget(QtWidgets.QWidget):
             description=self.datasetDescription.text(),
             directoryAbsPath=self.sourceDirectory
         )
-        self.datasetController.insertDataset(newDataset)
+        self.datasetController.newDataset(newDataset)
 
     def showLoadDirectory(self):
         """
