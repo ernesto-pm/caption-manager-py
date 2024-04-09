@@ -1,5 +1,7 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QVBoxLayout, QLabel, QFormLayout, QLineEdit, QFileDialog, QPushButton
+from modules.controllers import DatasetController
+from modules.models import Dataset
 
 class NewDatasetWidget(QtWidgets.QWidget):
     """
@@ -9,6 +11,8 @@ class NewDatasetWidget(QtWidgets.QWidget):
     datasetDescription: QLineEdit
     sourceDirectory: str
 
+    datasetController: DatasetController
+
     def __init__(self, *args, **kwargs):
         """
         Initializes the widget, sets up the UI layout and connects signals to slots
@@ -16,6 +20,7 @@ class NewDatasetWidget(QtWidgets.QWidget):
         :param kwargs:
         """
         super(NewDatasetWidget, self).__init__(*args, **kwargs)
+        self.datasetController = DatasetController()
 
         # Initialize initial instance variables and connect the listeners
         self.datasetName = QLineEdit()
@@ -59,9 +64,12 @@ class NewDatasetWidget(QtWidgets.QWidget):
         """
         Handles the submission of the form, effectively adding a new dataset to the bag of datasets.
         """
-        print(self.datasetName.text())
-        print(self.datasetDescription.text())
-        print(self.sourceDirectory)
+        newDataset = Dataset(
+            name=self.datasetName.text(),
+            description=self.datasetDescription.text(),
+            directoryAbsPath=self.sourceDirectory
+        )
+        self.datasetController.insertDataset(newDataset)
 
     def showLoadDirectory(self):
         """
