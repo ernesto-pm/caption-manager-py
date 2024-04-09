@@ -1,25 +1,30 @@
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QVBoxLayout, QLabel, QFormLayout, QLineEdit, QFileDialog, QPushButton
+from PyQt5.QtWidgets import QVBoxLayout, QLabel, QFormLayout, QLineEdit, QFileDialog, QPushButton, QHBoxLayout, QMainWindow
 from modules.controllers import DatasetController
 from modules.models import Dataset
+from functools import partial
 
 class NewDatasetWidget(QtWidgets.QWidget):
     """
     A widget for creating a new dataset from a source directory
     """
+    mainWindow: QMainWindow
+
     datasetName: QLineEdit
     datasetDescription: QLineEdit
     sourceDirectory: str
 
     datasetController: DatasetController
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, mainWindow: QMainWindow, *args, **kwargs):
         """
         Initializes the widget, sets up the UI layout and connects signals to slots
         :param args:
         :param kwargs:
         """
         super(NewDatasetWidget, self).__init__(*args, **kwargs)
+        self.mainWindow = mainWindow
+
         self.datasetController = DatasetController()
 
         # Initialize initial instance variables and connect the listeners
@@ -31,8 +36,24 @@ class NewDatasetWidget(QtWidgets.QWidget):
 
         # Create layout and add the form
         layout = QVBoxLayout()
+
+        layout.addLayout(self.createHeader())
         layout.addLayout(self.createForm())
         self.setLayout(layout)
+
+    def createHeader(self) -> QHBoxLayout:
+        """
+        Creates the header of the new dataset page, with a button to go back
+        :return:
+        """
+        layout = QHBoxLayout()
+
+        backButton = QPushButton("Cancel")
+        backButton.clicked.connect(partial(self.mainWindow.displayView, 0))
+
+        layout.addWidget(backButton)
+
+        return layout
 
     def createForm(self) -> QFormLayout:
         """

@@ -19,14 +19,4 @@ class DatasetController(object):
     def newDataset(self, newDataset: Dataset):
         pass
 
-class NewDatasetBuilder(object):
-    def __init__(self, dataset: Dataset):
-        if not os.path.isdir(dataset.directoryAbsPath):
-            raise Exception("The dataset path specified is not a directory")
-        self.dataset = dataset
-
-    def getAllFiles(self):
-        files = [f for f in listdir(self.dataset.directoryAbsPath) if isfile(join(self.dataset.directoryAbsPath, f))]
-
-
 

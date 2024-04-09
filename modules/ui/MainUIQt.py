@@ -23,7 +23,7 @@ class MainWindow(QMainWindow):
         self.setupMenu()
 
         self.viewContainer.addWidget(SplashScreenWidget())
-        self.viewContainer.addWidget(NewDatasetWidget())
+        self.viewContainer.addWidget(NewDatasetWidget(self))
 
     def setupMenu(self):
         # Setup the menu
