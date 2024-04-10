@@ -1,0 +1,4 @@
+pydantic==2.6.4
+PyQt5==5.15.10
+tinydb==4.8.0
+pandas==2.2.2

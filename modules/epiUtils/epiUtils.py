@@ -31,4 +31,3 @@ def ensureFileExists(filepath):
     """
     if not fileExists(filepath):
         raise Exception(f"Error, the path: {filepath} doest not exist")
-
