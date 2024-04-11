@@ -1,7 +1,6 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QVBoxLayout, QLabel, QFormLayout, QLineEdit, QFileDialog, QPushButton, QHBoxLayout, QMainWindow
 from modules.controllers import DatasetController
-from modules.dbModels import Dataset
 from functools import partial
 
 class NewDatasetWidget(QtWidgets.QWidget):
