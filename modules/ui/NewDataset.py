@@ -85,12 +85,11 @@ class NewDatasetWidget(QtWidgets.QWidget):
         """
         Handles the submission of the form, effectively adding a new dataset to the bag of datasets.
         """
-        newDataset = Dataset(
+        self.datasetController.newDataset(
             name=self.datasetName.text(),
             description=self.datasetDescription.text(),
-            directoryAbsPath=self.sourceDirectory
+            baseDirPath=self.sourceDirectory
         )
-        self.datasetController.newDataset(newDataset)
 
     def showLoadDirectory(self):
         """

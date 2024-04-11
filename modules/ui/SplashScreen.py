@@ -1,6 +1,7 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QVBoxLayout, QListWidget, QListWidgetItem
 from modules.controllers.DatasetController import DatasetController
+from modules.dbModels.Dataset import Dataset
 
 class SplashScreenWidget(QtWidgets.QWidget):
     datasetController: DatasetController
@@ -22,8 +23,8 @@ class SplashScreenWidget(QtWidgets.QWidget):
     def refreshDatasets(self):
         self.listWidget.clear()
 
-        datasets = self.datasetController.getAllDatasets()
+        datasets = Dataset.listAll()
         for dataset in datasets:
-            item = QListWidgetItem(dataset['name'])
+            item = QListWidgetItem(dataset.name)
             self.listWidget.addItem(item)
 
