@@ -44,5 +44,5 @@ def testDatasetDBCreation():
 def testGetAllDatasets():
     from modules.dbModels.Dataset import Dataset
 
-    for datset in Dataset.listAll():
-        print(datset.dict())
+    for dataset in Dataset.listAll():
+        print(dataset)

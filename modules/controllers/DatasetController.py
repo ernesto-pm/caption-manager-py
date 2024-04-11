@@ -13,10 +13,10 @@ class DatasetController(object):
         filesDataframe = filesEpiList.toDataframe()
         filesDataframe = filesDataframe.loc[filesDataframe['fileType'].isin(['image', 'text'])]
 
-        # Create the things we are going to store in the databse
+        # Create the things we are going to store in the database
         newDatasetID = Dataset(name=name, description=description, directoryAbsPath=baseDirPath).save()
 
-        # Get back a list of epi files, we want to transform this into
+        # Get back a list of all files
         filesList: EpiList[EpiFile] = EpiList.fromDataframe(filesDataframe, EpiFile)
         for file in filesList:
             pass
