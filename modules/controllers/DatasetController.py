@@ -11,26 +11,8 @@ from os import listdir
 import os
 
 class DatasetController(object):
-    db: TinyDB
-    datasetsTable: Table
-
-    def __init__(self, overrideDBPath: Optional[str] = None):
-        dbPath = os.path.join(os.getcwd(), "data", "db.json")
-        if overrideDBPath:
-            dbPath = overrideDBPath
-
-        self.db = TinyDB(dbPath)
-        self.datasetsTable = self.db.table("dataset")
-        self.datasetFilesTable = self.db.table("datasetFile")
-
-    def getAllDatasets(self) -> List[Dataset]:
-        typedDatasets: List[Dataset] = []
-        for dataset in self.datasetsTable.all():
-            typedDatasets.append(Dataset.parse_obj(dataset))
-
-        return typedDatasets
-
     def newDataset(self, name: str, description: str, baseDirPath: str):
+        # Load files in directory
         datasetSourceDir = EpiDirectory.fromFilePath(directoryAbsPath=baseDirPath)
         filesEpiList = datasetSourceDir.getListOfEpiFiles()
 
@@ -38,9 +20,13 @@ class DatasetController(object):
         filesDataframe = filesEpiList.toDataframe()
         filesDataframe = filesDataframe.loc[filesDataframe['fileType'].isin(['image', 'text'])]
 
+        # Create the things we are going to store in the databse
+        newDatasetID = Dataset(name=name, description=description, directoryAbsPath=baseDirPath).save()
+
+        # Get back a list of epi files, we want to transform this into
         filesList: EpiList[EpiFile] = EpiList.fromDataframe(filesDataframe, EpiFile)
-        for item in filesList:
-            print(item.fileType)
+        for file in filesList:
+            pass
 
         # Get back our filtered list of epifiles, so we can do stuff with it
         #

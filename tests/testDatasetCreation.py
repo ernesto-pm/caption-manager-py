@@ -35,3 +35,17 @@ def testDatasetCreation():
     datasetController = DatasetController(overrideDBPath="../data/db.json")
 
     datasetController.newDataset(name="Hello world", description="N/A", baseDirPath=testDatasetDirectory)
+
+
+def testDatasetDBCreation():
+    from modules.dbModels.Dataset import Dataset
+
+    dataset = Dataset(name="Hello world", description="My description", directoryAbsPath="/lolaxo")
+    print(dataset.save())
+
+
+def testGetAllDatasets():
+    from modules.dbModels.Dataset import Dataset
+
+    for datset in Dataset.listAll():
+        print(datset.dict())

@@ -28,3 +28,6 @@ class EpiList(Generic[EpiObjectTypeVar], list):
     def toDataframe(self) -> pd.DataFrame:
         epiObjDictionaries = [obj.dict() for obj in self]
         return pd.DataFrame(epiObjDictionaries)
+
+    def toListOfDicts(self) -> List[dict]:
+        return [obj.dict() for obj in self]
