@@ -91,6 +91,8 @@ class NewDatasetWidget(QtWidgets.QWidget):
             baseDirPath=self.sourceDirectory
         )
 
+        self.mainWindow.displayView(0)
+
     def showLoadDirectory(self):
         """
         Opens a dialog for the user to select the source directory. Updates the source directory button label

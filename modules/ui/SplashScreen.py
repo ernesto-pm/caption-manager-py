@@ -28,3 +28,7 @@ class SplashScreenWidget(QtWidgets.QWidget):
             item = QListWidgetItem(dataset.name)
             self.listWidget.addItem(item)
 
+    def showEvent(self, event):
+        self.refreshDatasets()
+        super(SplashScreenWidget, self).showEvent(event)
+
