@@ -1,7 +1,6 @@
 from pydantic import BaseModel
-from tinydb import TinyDB
 from tinydb.table import Table
-from typing import Optional, Any, List
+from typing import List
 from modules.globals import getDatasetTable
 
 class Dataset(BaseModel):

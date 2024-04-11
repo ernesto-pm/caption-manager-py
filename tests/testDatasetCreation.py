@@ -3,7 +3,6 @@ import sys
 sys.path.append(os.getcwd())
 
 from modules.epiUtils.epiFile import EpiFile
-from modules.epiUtils.epiDirectory import EpiDirectory
 from modules.epiUtils.epiList import EpiList
 from modules.controllers.DatasetController import DatasetController
 from os.path import expanduser, join
@@ -36,13 +35,11 @@ def testDatasetCreation():
 
     datasetController.newDataset(name="Hello world", description="N/A", baseDirPath=testDatasetDirectory)
 
-
 def testDatasetDBCreation():
     from modules.dbModels.Dataset import Dataset
 
     dataset = Dataset(name="Hello world", description="My description", directoryAbsPath="/lolaxo")
     print(dataset.save())
-
 
 def testGetAllDatasets():
     from modules.dbModels.Dataset import Dataset

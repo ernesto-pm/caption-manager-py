@@ -1,14 +1,7 @@
-from tinydb import TinyDB, Query
-from tinydb.table import Table
 from modules.dbModels import Dataset
-from modules.dbModels import DatasetFile
 from modules.epiUtils.epiDirectory import EpiDirectory
 from modules.epiUtils.epiFile import EpiFile
 from modules.epiUtils.epiList import EpiList
-from typing import List, Optional
-from os.path import isfile, join
-from os import listdir
-import os
 
 class DatasetController(object):
     def newDataset(self, name: str, description: str, baseDirPath: str):
