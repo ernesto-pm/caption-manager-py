@@ -21,8 +21,7 @@ class EpiFile(EpiObject):
 
         return cls(absFilePath=absFilePath, extension=extension,
                    filenameWithoutExtension=filenameWithoutExtension,
-                   filenameWithExtension=filenameWithExtension
-        )
+                   filenameWithExtension=filenameWithExtension)
 
     @computed_field
     @property

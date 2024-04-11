@@ -1,7 +1,8 @@
-from modules.dbModels import Dataset
+from modules.dbModels import Dataset, DatasetFile
 from modules.epiUtils.epiDirectory import EpiDirectory
 from modules.epiUtils.epiFile import EpiFile
 from modules.epiUtils.epiList import EpiList
+from typing import List
 
 class DatasetController(object):
     def newDataset(self, name: str, description: str, baseDirPath: str):
@@ -16,13 +17,17 @@ class DatasetController(object):
         # Create the things we are going to store in the database
         newDatasetID = Dataset(name=name, description=description, directoryAbsPath=baseDirPath).save()
 
-        # Get back a list of all files
+        # Get back a list of all files, transform them into dataset files
         filesList: EpiList[EpiFile] = EpiList.fromDataframe(filesDataframe, EpiFile)
-        for file in filesList:
-            pass
+        datasetFiles: List[DatasetFile] = [
+            DatasetFile(datasetID=newDatasetID,
+                        filenameWithExtension=file.filenameWithExtension,
+                        filenameWithoutExtension=file.filenameWithoutExtension,
+                        fileExtension=file.extension,
+                        absPath=file.absFilePath,
+                        type=file.fileType,
+                        ignored=False) for file in filesList
+        ]
 
-        # Get back our filtered list of epifiles, so we can do stuff with it
-        #
-        #for file in filesList:
-            #print(file.filenameWithExtension)
-
+        newFilesIDs = DatasetFile.insertMany(datasetFiles)
+        print(newFilesIDs)

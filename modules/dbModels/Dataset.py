@@ -1,13 +1,13 @@
 from pydantic import BaseModel
-from tinydb.table import Table
 from typing import List
 from modules.globals import getDatasetTable
+from datetime import datetime
 
 class Dataset(BaseModel):
     name: str
     description: str
     directoryAbsPath: str
-    _table: Table
+    createdAt: str = datetime.now().isoformat()
 
     @staticmethod
     def listAll() -> 'List[Dataset]':

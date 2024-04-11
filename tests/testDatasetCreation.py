@@ -31,7 +31,7 @@ def testEpiList():
 
 def testDatasetCreation():
     testDatasetDirectory = join(expanduser("~"), "Desktop", "testDataset")
-    datasetController = DatasetController(overrideDBPath="../data/db.json")
+    datasetController = DatasetController()
 
     datasetController.newDataset(name="Hello world", description="N/A", baseDirPath=testDatasetDirectory)
 
