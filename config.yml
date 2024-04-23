@@ -1,0 +1,10 @@
+services:
+  logging:
+    handlers:
+      console:
+        class: "logging.StreamHandler"
+        level: "DEBUG"
+        stream: "ext://sys.stderr"
+    root:
+      level: "DEBUG"
+      handlers: ["console"]

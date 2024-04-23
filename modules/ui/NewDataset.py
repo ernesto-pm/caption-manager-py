@@ -28,6 +28,7 @@ class NewDatasetWidget(QtWidgets.QWidget):
 
         # Initialize initial instance variables and connect the listeners
         self.datasetName = QLineEdit()
+        self.datasetName.setStyleSheet("border: 2px solid black; border-radius: 1px;")
         self.datasetName.textChanged.connect(self.validateForm)
         self.datasetDescription = QLineEdit()
         self.datasetDescription.textChanged.connect(self.validateForm)
